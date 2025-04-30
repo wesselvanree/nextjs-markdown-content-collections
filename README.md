@@ -1,6 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js type-safe Markdown content collections with zod
 
-## Getting Started
+This project demonstrates a possible implementation of type-safe local markdown files with minimal dependencies, inspired by the Astro implementation of content collections. This could be particularly useful for a blog or a personal site, and is fully customizable to your needs.
+
+## Getting started
 
 First, run the development server:
 
@@ -14,23 +16,23 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the site. You can define content collections in `content.config.ts` using the `defineCollection` function from the `./lib/content.ts` module. Frontmatter is parsed using zod.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Implementation details
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Most of this project is the default Next.js application after running
 
-## Learn More
+```
+pnpx create-next-app@latest
+```
 
-To learn more about Next.js, take a look at the following resources:
+After which several files were added:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `app/blog/[slug]/page.tsx`
+- `app/blog/page.tsx`
+- `components/markdown-body.tsx`
+- `content/blog/hello-world.md`
+- `lib/content.ts`
+- `content.config.ts`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To keep things simple, the current implementation relies on reading from the file system. Meaning that data can only be loaded while server rendering in a Node.js environment, or by statically rendering the pages during build time. If your application requires server rendering on the edge runtime, a possible implementation could be to add a compile step that generates json files of the content, and import those json files in the edge runtime.
