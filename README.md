@@ -3,7 +3,7 @@
 This project demonstrates a possible implementation of type-safe local markdown files with minimal dependencies, inspired by the Astro implementation of content collections. This could be particularly useful for a blog or a personal site, and is fully customizable to your needs.
 
 - Define collections of local Markdown files
-- Schema validation using zod
+- Schema validation using [zod](https://zod.dev/)
 - Type-safe interface to query content collections
 - Minimal dependencies
 
