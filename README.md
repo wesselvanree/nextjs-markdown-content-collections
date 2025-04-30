@@ -36,9 +36,9 @@ After which several files were added:
 - `app/blog/[slug]/page.tsx`
 - `app/blog/page.tsx`
 - `components/prose.tsx`
+- `components/mdx.tsx`
 - `content/blog/hello-world.md`
 - `lib/content.ts`
-- `lib/markdown-to-html.ts`
 - `content.config.ts`
 
 To keep things simple, the current implementation relies on reading from the file system. Meaning that data can only be loaded while server rendering in a Node.js environment, or by statically rendering the pages during build time.
@@ -48,5 +48,3 @@ To keep things simple, the current implementation relies on reading from the fil
 If your application requires server rendering on the edge runtime, a possible implementation could be to add a compile step that generates JSON files of the content, and import those JSON files in the edge runtime.
 
 Moreover, images are not optimized with the current implementation. I recommend using a CDN, and reference these images within your frontmatter. If you prefer to keep everything in your git repository, you could optimize images by compiling using a package like `sharp`. To prevent cumulative layout shift, I recommend encoding the image sizes in the filename (e.g. `a021f81ab8d643c4bd9c5ee937fa3054-1920x1080.jpg`). This enables you to read the proportions, and reserve the required space before loading the image with `next/image`.
-
-This implementation just renders markdown as html. If you want to be able to link to other pages on your own site from markdown files, they do not use the `next/link` component with the current implementation. Refer to the [Remote MDX section of the Next.js docs](https://nextjs.org/docs/app/guides/mdx#remote-mdx) for more details.

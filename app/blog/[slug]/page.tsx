@@ -1,6 +1,5 @@
-import { Prose } from '@/components/prose'
+import { MDXBody } from '@/components/mdx'
 import { collections } from '@/content.config'
-import { markdownToHtml } from '@/lib/markdown-to-html'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -38,8 +37,6 @@ export default async function BlogArticlePage(props: Props) {
     notFound()
   }
 
-  const contentHtml = await markdownToHtml(article.content)
-
   return (
     <div className="py-12 px-4">
       <div className="max-w-prose mx-auto">
@@ -68,9 +65,7 @@ export default async function BlogArticlePage(props: Props) {
           )}
         </div>
 
-        <Prose>
-          <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
-        </Prose>
+        <MDXBody source={article.content} />
       </div>
     </div>
   )

@@ -8,3 +8,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima rerum rem dolore
 ## Heading
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem enim consectetur laboriosam eligendi ad id fugit sequi architecto ipsa vitae dignissimos libero fuga cumque voluptatum impedit, animi ratione minus maxime! Laboriosam excepturi aut ea deserunt ullam iure consequatur ab velit quis veniam voluptatum quibusdam, est sapiente? Vero autem fugit perferendis quam beatae a veniam, incidunt nemo maxime quia aspernatur eius similique? Deserunt quis, nostrum dolore voluptas nemo culpa tempore, possimus unde ipsa optio, iste quae sed harum molestias soluta iusto!
+
+[Internal link](/blog)
+
+[External link](https://example.com)
