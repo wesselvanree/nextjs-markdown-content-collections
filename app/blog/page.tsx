@@ -1,6 +1,10 @@
 import { collections } from '@/content.config'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'Blog',
+}
+
 export default async function BlogPage() {
   const articles = collections.blog.getAll()
 

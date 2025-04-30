@@ -7,6 +7,28 @@ import { notFound } from 'next/navigation'
 type Props = {
   params: Promise<{ slug: string }>
 }
+
+// use static site generation
+export async function generateStaticParams() {
+  const slugs = collections.blog.getSlugs()
+
+  return slugs.map((slug) => ({ slug }))
+}
+
+export async function generateMetadata(props: Props) {
+  const params = await props.params
+
+  const article = collections.blog.getEntryBySlug(params.slug)
+
+  if (article == null) {
+    return undefined
+  }
+
+  return {
+    title: article.title,
+  }
+}
+
 export default async function BlogArticlePage(props: Props) {
   const params = await props.params
   const article = collections.blog.getEntryBySlug(params.slug)
