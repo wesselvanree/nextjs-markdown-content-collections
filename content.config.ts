@@ -10,6 +10,8 @@ const blog = defineCollection({
     imageAlt: z.string().optional(),
     tags: z.array(z.string()).optional(),
   }),
+  sortKey: 'publishedAt',
+  sortDirection: 'desc',
 })
 
 export const collections = {

@@ -22,6 +22,8 @@ type ContentCollection<S> = {
 export function defineCollection<S extends Record<string, unknown>>(config: {
   dir: string
   schema: z.ZodType<S>
+  sortKey?: keyof S
+  sortDirection?: 'asc' | 'desc'
 }) {
   const collectionDirectory = join(process.cwd(), config.dir)
 
@@ -59,9 +61,17 @@ export function defineCollection<S extends Record<string, unknown>>(config: {
 
   function getAll() {
     const slugs = getSlugs()
-    const posts = slugs.map((slug) => getEntryBySlug(slug)!)
+    let entries = slugs.map((slug) => getEntryBySlug(slug)!)
 
-    return posts
+    if (config.sortKey != null) {
+      entries = entries.sort(
+        (a, b) =>
+          (config.sortDirection === 'desc' ? -1 : 1) *
+          (a[config.sortKey!] < b[config.sortKey!] ? -1 : 1)
+      )
+    }
+
+    return entries
   }
 
   const result: ContentCollection<S> = {
