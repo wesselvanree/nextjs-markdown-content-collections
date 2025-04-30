@@ -1,5 +1,6 @@
-import { MarkdownBody } from '@/components/markdown-body'
+import { Prose } from '@/components/prose'
 import { collections } from '@/content.config'
+import { markdownToHtml } from '@/lib/markdown-to-html'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -37,6 +38,8 @@ export default async function BlogArticlePage(props: Props) {
     notFound()
   }
 
+  const contentHtml = await markdownToHtml(article.content)
+
   return (
     <div className="py-12 px-4">
       <div className="max-w-prose mx-auto">
@@ -65,7 +68,9 @@ export default async function BlogArticlePage(props: Props) {
           )}
         </div>
 
-        <MarkdownBody content={article.content} />
+        <Prose>
+          <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+        </Prose>
       </div>
     </div>
   )
