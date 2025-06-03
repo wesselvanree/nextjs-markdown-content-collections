@@ -22,7 +22,7 @@ type ContentCollection<S> = {
 export function defineCollection<S extends Record<string, unknown>>(config: {
   dir: string
   schema: z.ZodType<S>
-  sortKey?: keyof S
+  sortBy?: (item: S) => string | number | Date | null | undefined
   sortDirection?: 'asc' | 'desc'
 }) {
   const collectionDirectory = join(process.cwd(), config.dir)
@@ -62,13 +62,25 @@ export function defineCollection<S extends Record<string, unknown>>(config: {
   function getAll() {
     const slugs = getSlugs()
     let entries = slugs.map((slug) => getEntryBySlug(slug)!)
+    const sortBy = config.sortBy
 
-    if (config.sortKey != null) {
-      entries = entries.sort(
-        (a, b) =>
-          (config.sortDirection === 'desc' ? -1 : 1) *
-          (a[config.sortKey!] < b[config.sortKey!] ? -1 : 1)
-      )
+    if (typeof sortBy !== 'undefined') {
+      const negatedIfDesc = config.sortDirection === 'desc' ? -1 : 1
+
+      entries = entries.sort((a, b) => {
+        const sortValueA = sortBy(a)
+        const sortValueB = sortBy(b)
+
+        if (sortValueA == null && sortValueB == null) {
+          return 0
+        } else if (sortValueA == null) {
+          return negatedIfDesc
+        } else if (sortValueB == null) {
+          return negatedIfDesc * -1
+        }
+
+        return negatedIfDesc * (sortValueA < sortValueB ? -1 : 1)
+      })
     }
 
     return entries
