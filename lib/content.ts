@@ -19,6 +19,17 @@ type ContentCollection<S> = {
   })[]
 }
 
+/**
+ * Define a content collection for markdown files.
+ *
+ * @param config Collection configuration
+ * @param config.dir Directory that contains markdown files, this should be relative to the nodejs process path
+ * @param config.schema Zod schema for markdown frontmatter
+ * @param config.sortBy Function to set custom sort order based on the content, by default the content is sorted based on the markdown filename
+ * @param config.sortDirection Whether the content should be sorted in ascending or descending order (default: ascending)
+ *
+ * @returns An object that can be used to query content on the server
+ */
 export function defineCollection<S extends Record<string, unknown>>(config: {
   dir: string
   schema: z.ZodType<S>
@@ -26,12 +37,14 @@ export function defineCollection<S extends Record<string, unknown>>(config: {
   sortDirection?: 'asc' | 'desc'
 }) {
   const collectionDirectory = join(process.cwd(), config.dir)
+  const negatedIfDesc = config.sortDirection === 'desc' ? -1 : 1
 
   function getSlugs() {
     return fs
       .readdirSync(collectionDirectory)
       .filter((file) => file.endsWith('.md'))
       .map((entry) => entry.replace(/\.md$/, ''))
+      .sort((a, b) => negatedIfDesc * a.localeCompare(b))
   }
 
   function getEntryBySlug(slug: string) {
@@ -65,8 +78,6 @@ export function defineCollection<S extends Record<string, unknown>>(config: {
     const sortBy = config.sortBy
 
     if (typeof sortBy !== 'undefined') {
-      const negatedIfDesc = config.sortDirection === 'desc' ? -1 : 1
-
       entries = entries.sort((a, b) => {
         const sortValueA = sortBy(a)
         const sortValueB = sortBy(b)
