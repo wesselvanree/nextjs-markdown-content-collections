@@ -15,7 +15,11 @@ First, run the development server:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the site. You can define content collections in `content.config.ts` using the `defineCollection` function from the `./lib/content.ts` module. Frontmatter is parsed using zod.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the site. You can define content collections in `content.config.ts` using the `defineCollection` function from the `./lib/content.ts` module. Frontmatter is validated using zod.
+
+## Using this in your own project
+
+To use this in your own project, copy the `lib/content.ts` file to your repository. Define your content collections wherever you want, for example by creating a similar `content.config.ts` file as shown in this repo.
 
 ## Implementation details
 
