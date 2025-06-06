@@ -19,7 +19,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 ## Using this in your own project
 
-To use this in your own project, copy the `lib/content.ts` file to your repository. Define your content collections wherever you want, for example by creating a similar `content.config.ts` file as shown in this repo.
+To use this in your own project, copy the `lib/content.ts` file to your repository. This requires the following dependencies to be installed:
+
+```
+npm install gray-matter zod server-only
+```
+
+Define your content collections wherever you want, for example by creating a similar `content.config.ts` file as shown in this repo.
 
 ## Implementation details
 
