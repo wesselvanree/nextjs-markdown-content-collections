@@ -49,6 +49,6 @@ To keep things simple, the current implementation relies on reading from the fil
 
 ## Personal recommendations
 
-If your application requires server rendering on the edge runtime, a possible implementation could be to add a compile step that generates JSON files of the content, and import those JSON files in the edge runtime.
+If your application requires server rendering on the edge runtime, this implementation would not work because it relies on nodejs file system modules. Alternatively, you could generate JSON files during build time (and before starting the dev server), and import these generated JSON files in your app.
 
-Moreover, images are not optimized with the current implementation. I recommend using a CDN, and reference these images within your frontmatter. If you prefer to keep everything in your git repository, you could optimize images by compiling using a package like `sharp`. To prevent cumulative layout shift, I recommend encoding the image sizes in the filename (e.g. `a021f81ab8d643c4bd9c5ee937fa3054-1920x1080.jpg`). This enables you to read the proportions, and reserve the required space before loading the image with `next/image`.
+Moreover, images are not optimized with the current implementation. I recommend using a CDN, and referencing these images within your frontmatter. If you prefer to keep everything in your git repository, you could optimize images by compiling using a package like `sharp`. To prevent cumulative layout shift, I recommend encoding the image sizes in the filename (e.g. `a021f81ab8d643c4bd9c5ee937fa3054-1920x1080.jpg`). This enables you to read the proportions, and reserve the required space before loading the image with `next/image`.
